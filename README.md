@@ -1,3 +1,190 @@
-# MiniBlog\n\nWelcome to **MiniBlog**, a lightweight and intuitive web application designed to help you create, manage, and export your blog posts with ease. Whether you're a beginner or an experienced blogger, MiniBlog offers a seamless experience to organize your thoughts and share them with the world.\n\n## Table of Contents\n\n- [Features](#features)\n- [Screenshots](#screenshots)\n- [Usage](#usage)\n  - [Accessing MiniBlog](#accessing-miniblog)\n  - [Adding a New Post](#adding-a-new-post)\n  - [Editing a Post](#editing-a-post)\n  - [Deleting a Post](#deleting-a-post)\n  - [Exporting Your Blog](#exporting-your-blog)\n  - [Importing Your Blog](#importing-your-blog)\n  - [Using Commands](#using-commands)\n  - [Zooming and Sorting](#zooming-and-sorting)\n  - [Clearing All Data](#clearing-all-data)\n- [Command Reference](#command-reference)\n- [License](#license)\n\n## Features\n\n- **Create, Edit, and Delete Posts:** Easily manage your blog content with user-friendly forms.\n- **Export and Import JSON:** Backup your blog data or migrate it to another instance effortlessly.\n- **Command Autocomplete:** Utilize intuitive commands for streamlined blogging operations.\n- **Zoom and Sort:** Customize your viewing experience with zoom levels and sorting options.\n- **Search Functionality:** Quickly find posts using the search bar with support for exact and partial matches.\n- **Responsive Design:** Access and manage your blog from any device with a clean and responsive interface.\n\n## Screenshots\n\n### Home Page\n\n![Home Page](./screenshots/home.png)\n\n### Add New Post Form\n\n![Add Post Form](./screenshots/add-post-form.png)\n\n### Editing a Post\n\n![Edit Post](./screenshots/edit-post.png)\n\n### Exporting JSON\n\n![Export JSON](./screenshots/export-json.png)\n\n### Importing JSON\n\n![Import JSON](./screenshots/import-json.png)\n\n### Command Autocomplete\n\n![Command Autocomplete](./screenshots/command-autocomplete.png)\n\n### Zoom and Sort Controls\n\n![Zoom and Sort](./screenshots/zoom-sort.png)\n\n## Usage\n\n### Accessing MiniBlog\n\nAccess your MiniBlog application through GitHub Pages:\n\n[**Live Demo**](https://garbledhamster.github.io/MiniBlog/)\n\n### Adding a New Post\n\n1. **Open the Add Post Form**\n\n   Click on the **➕ Add New Post** button located in the control panel.\n\n   ![Open Add Post Form](./screenshots/open-add-post-form.png)\n\n2. **Fill in the Post Details**\n\n   - **Picture URL:** Enter the URL of an image to associate with the post. If left blank, a random image will be assigned automatically.\n   - **Background Color:** Choose a background color for the image container.\n   - **Title:** Provide a title for your post.\n   - **Description:** Enter a brief description.\n   - **Date:** Input the date in `MM/DD/YYYY` format. Defaults to today's date if not specified.\n   - **Body:** Write your content using Markdown syntax.\n\n   ![Fill Post Details](./screenshots/fill-post-details.png)\n\n3. **Save the Post**\n\n   Click the **💾 Save Post** button to add the post to your blog.\n\n   ![Save Post](./screenshots/save-post.png)\n\n### Editing a Post\n\n1. **Locate the Post**\n\n   Find the post you wish to edit in the **Latest Grid**.\n\n2. **Open the Edit Form**\n\n   Click on the **✏️ Edit Post** button associated with the post.\n\n   ![Edit Post Button](./screenshots/edit-post-button.png)\n\n3. **Modify the Details**\n\n   Update the desired fields in the form.\n\n4. **Save Changes**\n\n   Click the **💾 Save Post** button to apply the changes.\n\n### Deleting a Post\n\n1. **Locate the Post**\n\n   Find the post you wish to delete in the **Latest Grid**.\n\n2. **Delete the Post**\n\n   Click on the **🗑️ Delete Post** button associated with the post.\n\n   ![Delete Post Button](./screenshots/delete-post-button.png)\n\n3. **Confirm Deletion**\n\n   A confirmation prompt will appear. Click **OK** to proceed.\n\n### Exporting Your Blog\n\n1. **Click the Export Button**\n\n   Click on the **📥 Export JSON** button in the control panel.\n\n   ![Export JSON Button](./screenshots/export-json-button.png)\n\n2. **Download the JSON File**\n\n   A JSON file containing your blog data will be downloaded to your device.\n\n   ![Export Successful](./screenshots/export-success.png)\n\n### Importing Your Blog\n\n1. **Click the Import Button**\n\n   Click on the **📂 Load JSON** button in the control panel.\n\n   ![Load JSON Button](./screenshots/load-json-button.png)\n\n2. **Select the JSON File**\n\n   Choose the previously exported JSON file from your device.\n\n   ![Select JSON File](./screenshots/select-json-file.png)\n\n3. **Import and View Your Blog**\n\n   The application will load the data, and your posts will appear in the **Latest Grid**.\n\n   ![Import Successful](./screenshots/import-success.png)\n\n### Using Commands\n\nMiniBlog supports various commands to enhance your blogging experience. To access commands, type `/` in the **Command Input** field.\n\n1. **Open Command Input**\n\n   Click on the **Command Input** field and type `/` to see available commands.\n\n   ![Command Input](./screenshots/command-input.png)\n\n2. **Select a Command**\n\n   As you type, a suggestion box will appear. Use the arrow keys or mouse to select a command.\n\n   ![Command Suggestions](./screenshots/command-suggestions.png)\n\n3. **Execute the Command**\n\n   Press **Enter** to execute the selected command.\n\n### Zooming and Sorting\n\n**Zooming:**\n\n- Click the **🔍 Zoom** button to cycle through different zoom levels (75%, 100%, 125%, 150%).\n\n  ![Zoom Button](./screenshots/zoom-button.png)\n\n**Sorting:**\n\n- Click the **🚫 Sort** button to cycle through sorting options:\n  - **🚫 No Sorting**\n  - **🗓️ Sort by Date**\n  - **🔡 Sort by Name**\n  - **🎨 Sort by Color**\n\n  ![Sort Button](./screenshots/sort-button.png)\n\n### Clearing All Data\n\n1. **Click the Clear Button**\n\n   Click on the **🧹 Clear All** button in the control panel.\n\n   ![Clear Button](./screenshots/clear-button.png)\n\n2. **Confirm Clearing**\n\n   A confirmation prompt will appear. Click **OK** to remove all data from local storage.\n\n## Command Reference\n\nMiniBlog supports the following commands to streamline your blogging process. Access them by typing `/` in the **Command Input** field.\n\n### `/createpost 'Your Title Here'`\n\n**Description:** Creates a new blog post with the provided title.\n\n**Example:**\n\n```\n/createpost 'My First Blog Post'\n```\n\n### `/generatepost 'Your Prompt Here'`\n\n**Description:** Generates blog content based on the provided prompt using OpenAI's API.\n\n**Example:**\n\n```\n/generatepost 'Write a blog post about the benefits of remote work.'\n```\n\n### `/saveapikey 'Your_API_Key_Here'`\n\n**Description:** Registers your OpenAI API key for content generation.\n\n**Example:**\n\n```\n/saveapikey 'sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXX'\n```\n\n### `/clearapikey`\n\n**Description:** Removes the currently registered OpenAI API key.\n\n**Example:**\n\n```\n/clearapikey\n```\n\n## License\n\nThis project is licensed under the [MIT License](./LICENSE).\n\n---\n\n*Made with ❤️ by [Your Name](https://github.com/garbledhamster)*\n\n---\n```
+# MiniBlog
 
-This raw Markdown text includes escaped newlines for seamless integration into a README.md file. Let me know if further adjustments are needed!
+Welcome to **MiniBlog**, an intuitive web application for creating, managing, and exporting blog posts with ease. Whether you're a beginner or experienced blogger, MiniBlog helps you organize your thoughts and content in a streamlined, efficient way.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Usage](#usage)
+  - [Adding a New Post](#adding-a-new-post)
+  - [Editing a Post](#editing-a-post)
+  - [Deleting a Post](#deleting-a-post)
+  - [Exporting Your Blog](#exporting-your-blog)
+  - [Importing Your Blog](#importing-your-blog)
+  - [Using Commands](#using-commands)
+  - [Customizing Appearance](#customizing-appearance)
+  - [Clearing Settings](#clearing-settings)
+- [License](#license)
+
+---
+
+## Features
+
+- **Create, Edit, and Delete Posts**  
+  Manage your blog posts with an easy-to-use interface.
+  
+- **Markdown Support**  
+  Write rich content using Markdown for formatting.
+  
+- **Export and Import JSON**  
+  Backup and transfer your blog data effortlessly.
+
+- **Command Input with Autocomplete**  
+  Use commands to streamline blog management.
+
+- **Search and Navigate Posts**  
+  Quickly find posts or navigate using the built-in search functionality.
+
+- **Customizable Appearance**  
+  Use the color picker to style your posts’ frames and adjust the interface to your liking.
+
+---
+
+## Screenshots
+
+### Home Page
+![Home Page](./readme/home.png)
+
+---
+
+### Add Page Button
+![Add Page Button](./readme/add-page-button.png)
+
+---
+
+### Add Page Form
+![Add Page Form](./readme/add-page-form.png)
+
+---
+
+### Post Body Example
+![Post Body Example](./readme/post-body.png)
+
+---
+
+### Edit Post Buttons
+![Edit Post Buttons](./readme/post-buttons-delete-the-post-and-edit-the-post-button.png)
+
+---
+
+### Export JSON Button
+![Export JSON Button](./readme/export-json-button.png)
+
+---
+
+### Import JSON Button
+![Import JSON Button](./readme/import-json-button.png)
+
+---
+
+### Command Input Autocomplete
+![Command Input Autocomplete](./readme/auto-fill-commands-with-forward-slash.png)
+
+---
+
+### Color Picker for Frames
+![Color Picker](./readme/color-picker-for-edit-add-form-for-frames.png)
+
+---
+
+## Usage
+
+### Adding a New Post
+
+1. **Click the "Add Page" Button**  
+   Use the ➕ button to open the add page form.
+
+   ![Add Page Form Button](./readme/add-page-form-button.png)
+
+2. **Fill Out the Form**  
+   - Add a picture URL, or leave it blank for a default image.
+   - Choose a frame color using the color picker.
+   - Write a title, description, and Markdown-formatted body.
+
+   ![Add Page Form](./readme/add-page-form.png)
+
+3. **Save the Post**  
+   Click the 💾 button to save your post.
+
+---
+
+### Editing a Post
+
+1. **Locate the Post**  
+   Find the post you want to edit in the list view.
+
+2. **Click the Edit Button**  
+   Use the ✏️ button to open the edit form.  
+
+   ![Edit Form](./readme/edit-form-markdown-editable-save-and-close-buttons.png)
+
+3. **Save Your Changes**  
+   Make updates and save with the 💾 button.
+
+---
+
+### Deleting a Post
+
+1. **Locate the Post**  
+   Select the post you wish to delete.
+
+2. **Click the Delete Button**  
+   Use the 🗑️ button to delete the post.
+
+---
+
+### Exporting Your Blog
+
+1. **Click the Export Button**  
+   Use the 📥 button to export all your blog data to a JSON file.  
+
+   ![Export JSON Button](./readme/export-json-button.png)
+
+---
+
+### Importing Your Blog
+
+1. **Click the Import Button**  
+   Use the 📂 button to upload a previously exported JSON file.  
+
+   ![Import JSON Button](./readme/import-json-button.png)
+
+---
+
+### Using Commands
+
+1. **Type "/" in the Command Input**  
+   Start typing "/" to see autocomplete suggestions for commands.
+
+   ![Command Autocomplete](./readme/auto-fill-commands-with-forward-slash.png)
+
+2. **Select a Command**  
+   Use arrow keys to select a command and press Enter.
+
+---
+
+### Customizing Appearance
+
+- Use the color picker to style post frames and adjust colors to match your theme.  
+
+   ![Color Picker](./readme/color-picker-for-edit-add-form-for-frames.png)
+
+---
+
+### Clearing Settings
+
+1. **Click the Clear Button**  
+   Use the 🧹 button to clear all local settings and data.
+
+   ![Clear Settings](./readme/clear-miniblog-settings.png)
+
+---
+
+## License
+
+MiniBlog is licensed under the [MIT License](LICENSE).
+
+*Made with ❤️ by [Your Name](https://github.com/garbledhamster)*
