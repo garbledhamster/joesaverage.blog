@@ -1,6 +1,6 @@
 # Make a Blog
 
-![Logo](./screenshots/001614_151550.png)  
+![Logo](./readme/001614_151550.png)  
 *[INPUT SCREENSHOT HERE]*
 
 Welcome to **Make a Blog**, a simple yet powerful web application that allows you to create, manage, and export your blog pages effortlessly. Whether you're a seasoned blogger or just starting out, Make a Blog provides an intuitive interface to help you organize your thoughts and share them with the world.
