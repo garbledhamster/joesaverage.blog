@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Make a Blog</title>
+  <!-- Link to External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="content">
+    <div class="main-content">
+      <div class="wrapper">
+        <!-- Editable Title -->
+        <h1 class="latest" id="main-title">Double Click Me</h1>
+        
+        <!-- Control Buttons and Inputs -->
+        <div class="controls">
+          <button id="load-json-button" title="Load JSON 📂">📂</button>
+          <button id="open-form-button" title="Add New Page ➕">➕</button>
+          <button id="export-json-button" title="Export JSON 📥">📥</button>
+          <button id="clear-button" title="Clear All 🧹">🧹</button>
+          <button id="zoom-button" title="Zoom 🔍">🔍</button>
+          <button id="sort-button" title="No sorting applied">🚫</button>
+          <input type="file" id="json-file-input" accept=".json" style="display: none;">
+          <input type="text" id="command-input" placeholder="Type to search, '/' for commands" />
+        </div>
+        
+        <!-- Status Message -->
+        <div id="status-message" style="display: none;"></div>
+        
+        <!-- Add/Edit Page Form -->
+        <div class="add-page-form" id="add-page-form" style="display: none;">
+          <h2 id="form-title">Add New Page</h2>
+          <form id="page-form">
+            <label for="picture">Picture URL:</label>
+            <div class="picture-input">
+              <input type="url" id="picture" name="picture" placeholder="https://example.com/image.jpg">
+              <input type="color" id="bg-color" name="bg-color" value="#FFFF00">
+            </div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Page Title" required>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" placeholder="Brief Description" required>
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" placeholder="MM/DD/YYYY" required>
+            <label for="body">Body (Markdown Supported):</label>
+            <textarea id="body" name="body" placeholder="Your markdown content here." required></textarea>
+            <div class="form-buttons">
+              <button type="submit" id="save-button" title="Add/Save Page 💾">💾</button>
+              <button type="button" id="close-form-button" title="Cancel ❌">❌</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Latest Grid -->
+        <div class="latest-grid" id="latest-grid">
+          <p>No pages available. Please add a new page.</p>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+        
+        <!-- Local Storage Usage Info -->
+        <div class="storage-info" id="storage-info"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Overlay Element -->
+  <div class="expanded-overlay" id="expanded-overlay"></div>
+  
+  <!-- Suggestion Box for Autocomplete -->
+  <div class="suggestion-box" id="suggestion-box" style="display: none;"></div>
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.10/dist/purify.min.js"></script>
+  
+  <!-- Link to External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
