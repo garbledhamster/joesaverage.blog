@@ -18,7 +18,7 @@ const bodyTextarea = document.getElementById("body");
 let mainTitle = document.getElementById("main-title");
 let titleSaved = false;
 const GITHUB_JSON_URL =
-  "#https://raw.githubusercontent.com/garbledhamster/MiniBlogAdmin/refs/heads/main/posts.json";
+  "https://raw.githubusercontent.com/garbledhamster/MiniBlogAdmin/refs/heads/main/posts.json";
 let pages = [];
 let currentEditIndex = null;
 let expandedPageId = null;
