@@ -2,7 +2,7 @@
 
 Welcome to **MiniBlog Admin**, an intuitive web application designed for creating, managing, and exporting your blog posts. This admin tool allows you to draft and organize your content efficiently. Once your posts are ready, you can export them as a JSON file and upload it wherever you want them to be loaded from, integrating seamlessly with your MiniBlog front-end or any other platform.
 
-Access the live application here: [**MiniBlog Admin Live Demo**](https://garbledhamster.github.io/MiniBlog/)
+Access the live application here: [**MiniBlog Admin Live Demo**](https://garbledhamster.github.io/MiniBlogAdmin/)
 
 ---
 
