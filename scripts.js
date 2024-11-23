@@ -258,7 +258,7 @@ pageForm.addEventListener("submit", (e) => {
     BgColor: bgColor,
     Title: title,
     Description: description,
-    Date: date || new Date().toISOString().split("T")[0],
+    Date: date || new Date().toISOString(),
     Body: processedMarkdown
   };
   if (currentEditIndex === null) {
@@ -397,7 +397,7 @@ function executeCommandFromInput() {
 }
 function parseCommandArguments(argsString) {
   const args = {};
-  const regex = /'([^']*)'/g; // Match content within single quotes
+  const regex = /'([^']*)'/g;
   let match;
   while ((match = regex.exec(argsString)) !== null) {
     args.value = match[1] || "";
@@ -457,8 +457,9 @@ function handlegeneratepostCommand(args) {
     );
   }
 }
+
 function generatepost(prompt, apiKey) {
-  showStatusMessage("Generating content...");
+  showStatusMessage("Generating content feel free to keep using the site...");
   const url = "https://api.openai.com/v1/chat/completions";
   const headers = {
     "Content-Type": "application/json",
@@ -473,7 +474,8 @@ function generatepost(prompt, apiKey) {
       },
       {
         role: "system",
-        content: "You are a helpful ai assistant."
+        content:
+          'Follow these instructions. You are a helpful AI assistant. Make sure to write the post in an informative, conversational tone that avoids jargon. Don\'t use "Conclusion"; use "To Wrap-Up" instead. Use one of these four emojis to categorize the post: 🧠 Mind, 💪 Body, 👻 Spirit, 👼 Life. Add the emoji to the front of the title like "👼🧠 The Five Day Work Week is Over", "🧠 Meditation Can Be Practical", "👻 What Do Jesus and Buddha Have in Common?", or "Somatics and Calisthenics: The Perfect Way to Rebuild Your Body. 💪🧠 " always add at least one of these four emojis to the front of the posts title to categorize it.'
       }
     ],
     response_format: {
@@ -524,9 +526,7 @@ function generatepost(prompt, apiKey) {
       document.getElementById("body").value = responseObj.body;
       commandInput.value = "";
       hideStatusMessage();
-      document.getElementById("date").value = new Date()
-        .toISOString()
-        .split("T")[0];
+      document.getElementById("date").value = new Date().toISOString();
     })
     .catch((error) => {
       console.error("Fetch Error:", error.message);
@@ -534,29 +534,21 @@ function generatepost(prompt, apiKey) {
       showStatusMessage(`An error occurred: ${error.message}`);
     });
 }
+
 function showStatusMessage(message) {
   let statusMessage = document.getElementById("status-message");
   if (!statusMessage) {
     statusMessage = document.createElement("div");
     statusMessage.id = "status-message";
+    statusMessage.style.position = "fixed";
+    statusMessage.style.top = "10px";
+    statusMessage.style.right = "10px";
+    statusMessage.style.padding = "10px 20px";
+    statusMessage.style.backgroundColor = "#333";
+    statusMessage.style.color = "#fff";
+    statusMessage.style.borderRadius = "5px";
+    statusMessage.style.zIndex = "1000";
     document.body.appendChild(statusMessage);
-  }
-  statusMessage.className = "";
-  const lowerCaseMessage = message.toLowerCase();
-  if (
-    lowerCaseMessage.includes("error") ||
-    lowerCaseMessage.includes("issue") ||
-    lowerCaseMessage.includes("failed")
-  ) {
-    statusMessage.classList.add("error");
-  } else if (
-    lowerCaseMessage.includes("success") ||
-    lowerCaseMessage.includes("worked") ||
-    lowerCaseMessage.includes("completed")
-  ) {
-    statusMessage.classList.add("success");
-  } else {
-    statusMessage.classList.add("neutral");
   }
   statusMessage.textContent = message;
   statusMessage.style.display = "block";
@@ -841,7 +833,19 @@ function displayPages() {
     item.appendChild(desc);
     const date = document.createElement("h5");
     date.className = "date";
-    date.textContent = page.Date || "No Date Provided";
+    if (page.Date) {
+      const parsedDate = new Date(page.Date);
+      if (isNaN(parsedDate)) {
+        date.textContent = "Invalid Date";
+      } else {
+        const hasTime = page.Date.includes("T");
+        date.textContent = hasTime
+          ? parsedDate.toLocaleString()
+          : parsedDate.toLocaleDateString();
+      }
+    } else {
+      date.textContent = "No Date Provided";
+    }
     item.appendChild(date);
     const body = document.createElement("div");
     body.className = "body-content";
@@ -870,6 +874,18 @@ function displayPages() {
       editPage(actualIndex);
     });
     cardActions.appendChild(editButton);
+
+    const seriesButton = document.createElement("button");
+    seriesButton.className = "series-button";
+    seriesButton.innerHTML = "📚";
+    seriesButton.title = "Generate a series post 📚";
+    seriesButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      handleGenerateSeriesPost(actualIndex);
+    });
+
+    cardActions.appendChild(seriesButton);
+
     const processMarkdownButton = document.createElement("button");
     processMarkdownButton.className = "process-markdown-button";
     processMarkdownButton.innerHTML = "🧼";
@@ -916,6 +932,25 @@ function displayPages() {
     latestGrid.appendChild(item);
   });
 }
+
+function handleGenerateSeriesPost(index) {
+  const apiKey = localStorage.getItem("openai_api_key");
+  if (!apiKey) {
+    commandInput.value = "/saveapikey '[REPLACE ME WITH YOUR API KEY]'";
+    commandInput.focus();
+    commandInput.setSelectionRange(13, 13);
+    showStatusMessage("API key not configured. Please register your API key.");
+    return;
+  }
+  const currentPage = pages[index];
+  if (!currentPage) {
+    showStatusMessage("Page not found!");
+    return;
+  }
+  const prompt = `Based on the previous blog post titled "${currentPage.Title}", without losing the information from the last article apply any knowledge and or wisdom someone can gain from it be subtle when rewriting the post. The previous post content was: "${currentPage.Body}". Add the previous blog posts title to the end of the document wrapped in brackets like ""[[${currentPage.Title}]]" Ignore any html that and only focus on the content of the prevoius post.  Always write, complete paragraphs, lists, and posts`;
+  generatepost(prompt, apiKey);
+}
+
 function processLinks(html) {
   return html.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
     const page = pages.find((page) => page.Title === p1.trim());
