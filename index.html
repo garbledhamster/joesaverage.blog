@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>💥 Brutal Blog 💥</title>
+  <style>
+    body {
+      font-family: "Courier New", Courier, monospace;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      color: black;
+    }
+    /* Force a fixed full viewport height and hide overflow to let children scroll independently */
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 300px;
+      background: #f5f5f5;
+      border-right: 4px solid black;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+    }
+    /* Search box styling */
+    #search-box {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      border: 2px solid black;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .card {
+      background: white;
+      border: 2px solid black;
+      margin-bottom: 15px;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .card:hover {
+      background-color: #e0e0e0;
+    }
+    .card .title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .card .date {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    /* Ensure all markdown content uses the monospaced font */
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6,
+    .content p,
+    .content pre,
+    .content code,
+    .content ul,
+    .content ol,
+    .content li,
+    .content blockquote {
+      font-family: "Courier New", Courier, monospace;
+    }
+    .content img {
+      max-width: 100%;
+      height: auto;
+    }
+    /* h1 with a 4px thick horizontal rule below it */
+    .content h1::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 4px;
+      background-color: black;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar" id="sidebar">
+      <h2>📝 Posts</h2>
+      <input type="text" id="search-box" placeholder="Search posts..." />
+      <div id="posts-container"></div>
+    </div>
+    <div class="content" id="content">
+      <h1>🔥 Welcome to Brutal Blog 🔥</h1>
+      <p>Select a post from the sidebar to view its content.</p>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    let validPostsGlobal = [];
+
+    function formatDate(dateStr) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateStr).toLocaleDateString(undefined, options);
+    }
+
+    async function loadMarkdown(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const text = await response.text();
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = marked.parse(text);
+      } catch (error) {
+        console.error('Error loading markdown:', error);
+        document.getElementById('content').innerHTML = '<p>Error loading post.</p>';
+      }
+    }
+
+    function renderPosts(posts) {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = "";
+      posts.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'title';
+        titleDiv.textContent = post.title;
+
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'date';
+        dateDiv.textContent = formatDate(post.date_published);
+
+        card.appendChild(titleDiv);
+        card.appendChild(dateDiv);
+
+        card.addEventListener('click', () => {
+          loadMarkdown(post.link);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    async function loadPosts() {
+      try {
+        const response = await fetch('posts.json');
+        if (!response.ok) throw new Error('Failed to fetch posts.json');
+        const posts = await response.json();
+
+        // Validate each post by attempting a HEAD request to its Markdown file.
+        const validatedPosts = await Promise.all(posts.map(async post => {
+          try {
+            const res = await fetch(post.link, { method: 'HEAD' });
+            if (!res.ok) throw new Error(`Status ${res.status}`);
+            return post;
+          } catch (error) {
+            console.error(`Failed to load post '${post.title}' from ${post.link}:`, error);
+            return null;
+          }
+        }));
+
+        // Filter out posts that failed to load.
+        const validPosts = validatedPosts.filter(post => post !== null);
+
+        // Sort valid posts by published date (latest first).
+        validPosts.sort((a, b) => new Date(b.date_published) - new Date(a.date_published));
+
+        // Store globally and render the posts.
+        validPostsGlobal = validPosts;
+        renderPosts(validPostsGlobal);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('posts-container').innerHTML = '<p>Error loading posts.</p>';
+      }
+    }
+
+    // Auto-search as the user types.
+    document.getElementById('search-box').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filtered = validPostsGlobal.filter(post =>
+        post.title.toLowerCase().includes(searchTerm)
+      );
+      renderPosts(filtered);
+    });
+
+    document.addEventListener('DOMContentLoaded', loadPosts);
+  </script>
+</body>
+</html>
