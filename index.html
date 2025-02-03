@@ -12,10 +12,28 @@
       background-color: white;
       color: black;
     }
-    /* Force a fixed full viewport height and hide overflow to let children scroll independently */
+    /* Top Menu Bar */
+    #menu {
+      background-color: #f5f5f5;
+      padding: 10px 20px;
+      border-bottom: 4px solid black;
+      font-family: "Courier New", Courier, monospace;
+    }
+    #menu a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: black;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #menu a:hover {
+      text-decoration: underline;
+    }
+    /* Force a fixed full viewport height and let children scroll independently */
     .container {
       display: flex;
-      height: 100vh;
+      height: calc(100vh - 60px); /* subtract menu bar height */
       overflow: hidden;
     }
     .sidebar {
@@ -108,6 +126,11 @@
   </style>
 </head>
 <body>
+  <!-- Top Menu Bar -->
+  <nav id="menu">
+    <a href="#" id="home-menu">Home</a>
+    <a href="#" id="about-menu">About</a>
+  </nav>
   <div class="container">
     <div class="sidebar" id="sidebar">
       <h2>📝 Posts</h2>
@@ -122,24 +145,25 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     let validPostsGlobal = [];
+    const defaultContent = '<h1>Welcome to my mini blog!</h1><p>Select a post from the sidebar to view its content.</p>';
 
     function formatDate(dateStr) {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
       return new Date(dateStr).toLocaleDateString(undefined, options);
     }
 
-    // Loads a markdown file, updates URL with query param, and adds a share button.
+    // Loads markdown content from a URL, updates history, and adds a share button.
     async function loadMarkdown(url) {
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
         const text = await response.text();
 
-        // Update the URL using pushState so the link becomes shareable.
+        // Update URL with query parameter for shareable link.
         history.pushState(null, '', '?post=' + encodeURIComponent(url));
 
         const contentDiv = document.getElementById('content');
-        // Insert share button above the post content.
+        // Insert share button above the content.
         const shareButtonHTML = `<button id="share-button">🔗 Share</button>`;
         contentDiv.innerHTML = shareButtonHTML + marked.parse(text);
 
@@ -147,16 +171,25 @@
         document.getElementById('share-button').addEventListener('click', () => {
           const shareUrl = window.location.href;
           navigator.clipboard.writeText(shareUrl)
-            .then(() => {
-              alert('Link copied to clipboard!');
-            })
-            .catch(() => {
-              alert('Failed to copy link.');
-            });
+            .then(() => alert('Link copied to clipboard!'))
+            .catch(() => alert('Failed to copy link.'));
         });
       } catch (error) {
         console.error('Error loading markdown:', error);
         document.getElementById('content').innerHTML = '<p>Error loading post.</p>';
+      }
+    }
+
+    // Loads markdown content without updating history or adding a share button (used for About).
+    async function loadMarkdownExternal(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const text = await response.text();
+        document.getElementById('content').innerHTML = marked.parse(text);
+      } catch (error) {
+        console.error('Error loading external markdown:', error);
+        document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
       }
     }
 
@@ -218,7 +251,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const postLinkParam = urlParams.get('post');
         if (postLinkParam) {
-          // Find the matching post from the validated list.
           const targetPost = validPostsGlobal.find(post => post.link === postLinkParam);
           if (targetPost) {
             loadMarkdown(targetPost.link);
@@ -237,6 +269,21 @@
         post.title.toLowerCase().includes(searchTerm)
       );
       renderPosts(filtered);
+    });
+
+    // Menu bar event listeners.
+    document.getElementById('home-menu').addEventListener('click', (e) => {
+      e.preventDefault();
+      // Reset content to default message.
+      document.getElementById('content').innerHTML = defaultContent;
+      // Clear query parameters in URL.
+      history.pushState(null, '', window.location.pathname);
+    });
+
+    document.getElementById('about-menu').addEventListener('click', (e) => {
+      e.preventDefault();
+      const aboutUrl = 'https://raw.githubusercontent.com/garbledhamster/joesaverage.blog/refs/heads/main/README.md';
+      loadMarkdownExternal(aboutUrl);
     });
 
     document.addEventListener('DOMContentLoaded', loadPosts);
