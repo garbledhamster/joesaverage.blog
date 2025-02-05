@@ -116,7 +116,7 @@
         "date_published":  "2024-11-08",
         "last_edited":  "2024-11-08",
         "description":  "Ever wondered how some people seem to glide...",
-        "link":  "posts/0017_hey-joe-let\u0027s-talk-focus-levels.md"
+        "link":  "posts/0017_hey-joe-lets-talk-focus-levels.md"
     },
     {
         "title":  "My Resume",
@@ -262,7 +262,14 @@
         "title":  "Deep Relaxation Technique",
         "date_published":  "2025-02-03",
         "last_edited":  "2025-02-03",
-        "description":  "â€¼ï¸ This technique needs to be done seated or lying down. You can pass out doing it.",
+        "description":  "This technique needs to be done seated or lying down. You can pass out doing it.",
         "link":  "posts/0038_deep-relaxation-technique.md"
+    },
+    {
+        "title":  "Whim Hoff - A single breath",
+        "date_published":  "2025-02-05",
+        "last_edited":  "2025-02-05",
+        "description":  "What does a single Whim Hoff breath do for you?",
+        "link":  "posts/0039_whim-hoff.md"
     }
 ]
