@@ -271,5 +271,12 @@
         "last_edited":  "2025-02-05",
         "description":  "What does a single Whim Hoff breath do for you?",
         "link":  "posts/0039_whim-hoff.md"
+    },
+    {
+        "title":  "Outlook (PWA) Direct Print Not Working",
+        "date_published":  "2025-02-14",
+        "last_edited":  "2025-02-14",
+        "description":  "Outlook Direct Print Not Working? Check out this article.",
+        "link":  "posts/0040_outlook-pwa-direct-print-not-working.md"
     }
 ]
