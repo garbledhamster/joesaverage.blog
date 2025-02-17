@@ -144,6 +144,16 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
+  window.addEventListener("message", function (event) {
+    if (event.data.type === "applyStyles") {
+      document.body.style.backgroundColor = event.data.styles.backgroundColor;
+      document.body.style.color = event.data.styles.color;
+      document.body.style.fontFamily = event.data.styles.fontFamily;
+    }
+  });
+</script>
+
+  <script>
     let validPostsGlobal = [];
     const defaultContent = '<h1>Joe\'s Average Blog</h1><p>Select a post from the sidebar to view its content.</p>';
 
